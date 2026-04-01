@@ -41,6 +41,7 @@
       ]
     ],
     "experiments": {
+      "baseUrl": "/containers/damien-portfolio-daballerat",
       "typedRoutes": true,
       "reactCompiler": true
     }

@@ -21,10 +21,10 @@ const isTabletOrWeb = SCREEN_WIDTH > 800;
 export default function HomeScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
-  const cardAnims = aboutCards.map(() => ({
-    opacity: useRef(new Animated.Value(0)).current,
-    translateY: useRef(new Animated.Value(40)).current,
-  }));
+  const cardAnims = useRef(aboutCards.map(() => ({
+    opacity: new Animated.Value(0),
+    translateY: new Animated.Value(40),
+  }))).current;
 
   useEffect(() => {
     Animated.parallel([

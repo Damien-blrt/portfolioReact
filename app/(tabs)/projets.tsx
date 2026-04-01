@@ -49,7 +49,7 @@ function ProjectCardComp({ project, animStyle }: any) {
 
           <Text style={styles.projectTitle} numberOfLines={2} adjustsFontSizeToFit>{project.title}</Text>
           <Text style={styles.projectContext} numberOfLines={3}>{project.context}</Text>
-          
+
           <View style={styles.techTagsWrapper}>
             {project.techStack.slice(0, 4).map((tech: string, tIndex: number) => (
               <View key={tIndex} style={styles.techTag}>
@@ -77,10 +77,10 @@ function ProjectCardComp({ project, animStyle }: any) {
 
 export default function ProjetsScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const projectAnims = projects.map(() => ({
-    opacity: useRef(new Animated.Value(0)).current,
-    translateY: useRef(new Animated.Value(60)).current,
-  }));
+  const projectAnims = useRef(projects.map(() => ({
+    opacity: new Animated.Value(0),
+    translateY: new Animated.Value(60),
+  }))).current;
 
   useEffect(() => {
     Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }).start();
@@ -125,9 +125,9 @@ export default function ProjetsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.bgPrimary },
-  content: { 
-    paddingTop: Platform.OS === 'web' ? 120 : 140, 
-    paddingBottom: Spacing.xxxl 
+  content: {
+    paddingTop: Platform.OS === 'web' ? 120 : 140,
+    paddingBottom: Spacing.xxxl
   },
 
   /* Header */
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.border,
     padding: Spacing.xl,
   },
-  projectImage: { 
+  projectImage: {
     width: '100%',
     height: '100%',
   },

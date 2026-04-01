@@ -11,10 +11,10 @@ const isTabletOrWeb = SCREEN_WIDTH > 800;
 
 export default function CompetencesScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const categoryAnims = skillCategories.map(() => ({
-    opacity: useRef(new Animated.Value(0)).current,
-    translateY: useRef(new Animated.Value(40)).current,
-  }));
+  const categoryAnims = useRef(skillCategories.map(() => ({
+    opacity: new Animated.Value(0),
+    translateY: new Animated.Value(40),
+  }))).current;
 
   useEffect(() => {
     Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }).start();
@@ -99,9 +99,9 @@ export default function CompetencesScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.bgPrimary },
-  content: { 
-    paddingTop: Platform.OS === 'web' ? 140 : 160, 
-    paddingBottom: Spacing.xxxl 
+  content: {
+    paddingTop: Platform.OS === 'web' ? 140 : 160,
+    paddingBottom: Spacing.xxxl
   },
 
   /* Header */

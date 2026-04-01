@@ -16,10 +16,10 @@ const images: Record<string, any> = {
 
 export default function ParcoursScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const entryAnims = parcours.entries.map(() => ({
-    opacity: useRef(new Animated.Value(0)).current,
-    translateY: useRef(new Animated.Value(80)).current,
-  }));
+  const entryAnims = useRef(parcours.entries.map(() => ({
+    opacity: new Animated.Value(0),
+    translateY: new Animated.Value(80),
+  }))).current;
 
   useEffect(() => {
     Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }).start();
