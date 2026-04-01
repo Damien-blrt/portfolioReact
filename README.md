@@ -1,4 +1,4 @@
-# Portfolio
+# portfolio
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://codefirst.iut.uca.fr/gitlab/daballerat/portfolio.git
+git remote add origin https://codefirst.iut.uca.fr/gitlab/IUT_INF63/projets-etudiants/Jardinageons/portfolio.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://codefirst.iut.uca.fr/gitlab/daballerat/portfolio/-/settings/integrations)
+- [ ] [Set up project integrations](https://codefirst.iut.uca.fr/gitlab/IUT_INF63/projets-etudiants/Jardinageons/portfolio/-/settings/integrations)
 
 ## Collaborate with your team
 

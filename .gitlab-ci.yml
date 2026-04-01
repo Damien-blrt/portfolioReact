@@ -1,0 +1,36 @@
+stages:
+  - push
+  - deploy
+
+variables:
+  DOCKERFILE_RELATIVE_PATH: .dockerfile
+  DOCKERFILE_CONTEXT_PATH: .
+  DESTINATION_REGISTRY_IMAGE_NAME: codefirst.iut.uca.fr/daballerat/portfolio/app
+  DESTINATION_REGISTRY_IMAGE_VERSION: main
+
+include:
+  - project: "IUT_INF63/generic-ci"
+    ref: "main"
+    file:
+      - "build/.docker-build.yml"
+      - "deploy/.docker-deploy.yml"
+
+push-image:
+  stage: push
+  extends: .build-and-push-docker-image
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+deploy-portfolio:
+  stage: deploy
+  extends: .deploy-image
+  variables:
+    CONTAINER_NAME: damien-portfolio
+    CONTAINER_IMAGE_PATH: codefirst.iut.uca.fr/daballerat/portfolio/app:main
+    CONTAINER_HTTP_PORT: 80
+    NAMESPACE_TOKEN: $DEPLOY_TOKEN
+    NAMESPACE_NAME: daballerat
+    CONTAINER_CPU: 0.1
+    CONTAINER_RAM: 128M
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
