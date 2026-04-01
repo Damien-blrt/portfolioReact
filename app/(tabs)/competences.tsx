@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.border,
     flexBasis: isTabletOrWeb ? `calc(33.333% - ${Spacing.xxl}px)` as any : '100%',
-    minWidth: 280,
-    minHeight: 400,
+    minWidth: 308,
+    minHeight: 360,
     overflow: 'hidden',
     ...(Platform.OS === 'web'
       ? { shadowColor: Colors.shadowMedium, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 1, shadowRadius: 30 }
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.accent,
   },
   skillCategoryTitle: {
-    fontSize: FontSizes.xxl,
+    fontSize: FontSizes.xl,
     fontWeight: '800',
     color: Colors.textPrimary,
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.textMuted,
   },
   skillItemText: {
-    fontSize: FontSizes.xl,
+    fontSize: FontSizes.lg,
     color: Colors.textSecondary,
     flex: 1,
   },

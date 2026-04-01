@@ -245,8 +245,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     // 25% to 30% des largeurs, environ
     flexBasis: isTabletOrWeb ? `calc(33.333% - ${Spacing.xl}px)` as any : '100%',
-    minWidth: 280,
-    minHeight: 350,
+    minWidth: 308,
+    minHeight: 315,
     overflow: 'hidden',
     ...(Platform.OS === 'web'
       ? { shadowColor: Colors.shadowMedium, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 1, shadowRadius: 24 }

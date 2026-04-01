@@ -78,10 +78,10 @@ export default function TabLayout() {
       }}
       sceneContainerStyle={{ backgroundColor: Colors.bgPrimary }}
     >
-      <Tabs.Screen name="index" options={{ title: 'Accueil' }} />
-      <Tabs.Screen name="competences" options={{ title: 'Compétences' }} />
-      <Tabs.Screen name="parcours" options={{ title: 'Parcours' }} />
-      <Tabs.Screen name="projets" options={{ title: 'Projets' }} />
+      <Tabs.Screen name="index" options={{ title: 'Accueil — Damien BALLERAT' }} />
+      <Tabs.Screen name="competences" options={{ title: 'Compétences — Damien BALLERAT' }} />
+      <Tabs.Screen name="parcours" options={{ title: 'Parcours — Damien BALLERAT' }} />
+      <Tabs.Screen name="projets" options={{ title: 'Projets — Damien BALLERAT' }} />
     </Tabs>
   );
 }

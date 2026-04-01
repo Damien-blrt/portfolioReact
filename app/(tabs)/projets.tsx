@@ -15,11 +15,11 @@ const isTabletOrWeb = SCREEN_WIDTH > 800;
 
 const projectImages: Record<string, any> = {
   jardinageons: require('@/assets/images/Jardinageons.png'),
-  artistbot: require('@/assets/images/Pokerandom.png'), // placeholder
+  artistbot: require('@/assets/images/artistbot.png'),
   pokerandom: require('@/assets/images/Pokerandom.png'),
 };
 
-const COLUMN_WIDTH = 380; // slightly smaller to fit better side-by-side
+const COLUMN_WIDTH = 418; // slightly smaller to fit better side-by-side
 
 function ProjectCardComp({ project, animStyle }: any) {
   const router = useRouter();
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.border,
     overflow: 'hidden',
-    height: 600, // Reduced from 700 to match tighter layout
+    height: 540, // Reduced from 600
     flexDirection: 'column',
     ...(Platform.OS === 'web'
       ? { shadowColor: Colors.shadowMedium, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 1, shadowRadius: 20, cursor: 'pointer', transition: 'all 0.3s ease' }
@@ -214,6 +214,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  mobileOverlayImage: {
+    width: '35%',
+    height: '110%',
+    position: 'absolute',
+    right: Spacing.md,
+    bottom: -15,
+  },
 
   projectInfo: {
     flex: 1,
@@ -231,11 +238,11 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   projectTitle: {
-    fontSize: FontSizes.xxxl, // Reduced from display
+    fontSize: FontSizes.xxl, // Reduced from xxxl
     fontWeight: '800',
     color: Colors.textPrimary,
     marginBottom: Spacing.sm,
-    height: FontSizes.xxxl * 1.3, // Fixed height for 1 line, or bounds
+    height: FontSizes.xxl * 1.3, // Fixed height for 1 line, or bounds
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
   },
   projectContext: {

@@ -28,6 +28,7 @@ const galleryImages: Record<string, any[]> = {
   jardinageons: [
     require('@/assets/images/JardinageonsPhp.png'),
     require('@/assets/images/jardinageonsapI.png'),
+    require('@/assets/images/jardinageonsmobile.png'),
   ],
   pokerandom: [
     require('@/assets/images/PokerandomExample.png'),

@@ -12,6 +12,7 @@ const isTabletOrWeb = SCREEN_WIDTH > 800;
 const images: Record<string, any> = {
   iut: require('@/assets/images/iut.png'),
   lycee: require('@/assets/images/images.jpeg'),
+  vietnam: require('@/assets/images/vietnam.png'),
 };
 
 export default function ParcoursScreen() {
@@ -88,7 +89,7 @@ export default function ParcoursScreen() {
   );
 }
 
-const COLUMN_WIDTH = 450;
+const COLUMN_WIDTH = 495;
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.bgPrimary },
@@ -169,7 +170,6 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.xl,
     paddingHorizontal: Spacing.xl,
     backgroundColor: Colors.bgSecondary,
-    flex: 1, // Pour pousser la taille
     gap: Spacing.md,
   },
   imageWrap: {
@@ -201,7 +201,6 @@ const styles = StyleSheet.create({
   },
 
   entryCardBottom: {
-    flex: 1.5,
     padding: Spacing.xxxl,
     alignItems: 'center',
     justifyContent: 'flex-start',

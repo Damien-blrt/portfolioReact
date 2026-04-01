@@ -33,7 +33,7 @@ export const aboutCards = [
     icon: '🎯',
     title: 'Ce que je recherche',
     paragraphs: [
-      "Je suis à la recherche d'une alternance pour l'année 2025/2026 dans le domaine de la programmation, où je pourrai mettre à profit mes compétences techniques et mes qualités personnelles.",
+      "Je suis à la recherche d'une alternance pour l'année 2026/2027 dans le domaine de la programmation, où je pourrai mettre à profit mes compétences techniques et mes qualités personnelles.",
       "Je suis particulièrement intéressé par les projets qui me permettront de développer mes compétences en développement logiciel, web et mobile.",
       "Je suis également ouvert à d'autres technologies et langages de programmation, car je crois fermement que la diversité des expériences enrichit mes compétences.",
     ],
@@ -87,18 +87,24 @@ export const parcours = {
   title: 'Parcours scolaire',
   entries: [
     {
-      institution: 'BUT Informatique — Clermont-Ferrand',
-      period: '2023 - Présent',
-      description:
-        "Actuellement étudiant en BUT Informatique à Clermont-Ferrand, j'ai choisi cette formation pour sa dimension professionnalisante et les nombreux débouchés qu'elle propose dans des secteurs en pleine évolution, comme le développement logiciel, la cybersécurité ou encore l'intelligence artificielle.",
-      image: 'iut',
-    },
-    {
       institution: 'Lycée Godefroy-de-Bouillon',
       period: 'Baccalauréat général',
       description:
         "Baccalauréat général avec les spécialités physique-chimie et sciences économiques et sociales. Cette formation m'a permis d'acquérir des bases solides en sciences et en analyse, compétences que je continue de développer dans mon parcours actuel.",
       image: 'lycee',
+    },
+    {
+      institution: 'BUT Informatique - Clermont-Ferrand',
+      period: '2024 - Présent',
+      description:
+        "Actuellement étudiant en BUT Informatique à Clermont-Ferrand, j'ai choisi cette formation pour sa dimension professionnalisante et les nombreux débouchés qu'elle propose dans des secteurs en pleine évolution, comme le développement logiciel, la cybersécurité ou encore l'intelligence artificielle.",
+      image: 'iut',
+    },
+    {
+      institution: 'Stage de fin d\'études - Phenikaa (Hanoï, Vietnam)',
+      period: 'Avril 2026 - Juin 2026',
+      description: 'Leveraging AI to navigate and analyze the complex, unstructured urban environment of Hanoi, supporting Phenikaa’s Autonomous Vehicle and Traffic Monitoring projects.\nHarnessing Large Language Models (LLMs) for specific domains such as Education, Legal support, and Customer Service, with a focus on Vietnamese-English cross-lingual capabilities.\nAssisting medical professionals in diagnosis and treatment planning by analyzing X-rays, CT scans, and MRI data.',
+      image: 'vietnam',
     },
   ],
   futureGoal:
@@ -129,7 +135,7 @@ export const projects: Project[] = [
     id: 'jardinageons',
     title: 'Jardinageons',
     subtitle: 'Gestion de potager',
-    techStack: ['PostgreSQL', 'PHP', 'Twig', 'Bootstrap', 'Alto Router', 'JavaScript', 'Kotlin', 'C#', 'Entity Framework', 'Blazor', 'Docker', 'xUnit'],
+    techStack: ['PostgreSQL', 'PHP', 'Twig', 'JavaScript', 'Kotlin', 'C#', 'Entity Framework', 'Blazor', 'Docker', 'xUnit'],
     context:
       "Jardinageons est un projet de gestion de potager conçu pour aider les particuliers à organiser, suivre et optimiser leurs activités de jardinage. Le produit centralise l'ensemble des données liées au jardin — plantations, arrosage, stocks, récoltes et historique — afin de remplacer les supports papier et les outils fragmentés par une solution unique et cohérente.",
     objective:
