@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  DOCKERFILE_RELATIVE_PATH: .dockerfile
+  DOCKERFILE_RELATIVE_PATH: Dockerfile
   DOCKERFILE_CONTEXT_PATH: .
   DESTINATION_REGISTRY_IMAGE_NAME: codefirst.iut.uca.fr/daballerat/portfolio/app
   DESTINATION_REGISTRY_IMAGE_VERSION: main
