@@ -35,7 +35,7 @@ export default function CompetencesScreen() {
       {/* Header Immense */}
       <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
         <View style={[styles.headerContent, isTabletOrWeb && { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxxl }]}>
-          <View style={[styles.headerTextWrap, isTabletOrWeb && { minWidth: 300 }]}>
+          <View style={[styles.headerTextWrap, isTabletOrWeb && { minWidth: 500 }]}>
             <Text style={[styles.headerLabel, !isMobile && { fontSize: FontSizes.md, letterSpacing: 6 }]}>EXPERTISE</Text>
             <Text style={[styles.headerTitle, !isMobile && { fontSize: FontSizes.display }]}>Compétences techniques</Text>
           </View>
