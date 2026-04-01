@@ -2,12 +2,11 @@
  * Parcours Screen - Horizontal Timeline Cards layout (côte à côte, style piliers)
  */
 import React, { useEffect, useRef } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, Animated, Platform, Dimensions } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, Animated, Platform, useWindowDimensions } from 'react-native';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { parcours } from '@/constants/data';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const isTabletOrWeb = SCREEN_WIDTH > 800;
+
 
 const images: Record<string, any> = {
   iut: require('@/assets/images/iut.png'),
@@ -16,6 +15,10 @@ const images: Record<string, any> = {
 };
 
 export default function ParcoursScreen() {
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const isTabletOrWeb = SCREEN_WIDTH > 800;
+  const isMobile = SCREEN_WIDTH < 640;
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const entryAnims = useRef(parcours.entries.map(() => ({
     opacity: new Animated.Value(0),
@@ -49,6 +52,8 @@ export default function ParcoursScreen() {
             key={index}
             style={[
               styles.timelineEntryColumn,
+              isTabletOrWeb && { flexBasis: `calc(33.333% - ${Spacing.xxxl}px)` as any },
+              isMobile && { minWidth: '100%' },
               { opacity: entryAnims[index].opacity, transform: [{ translateY: entryAnims[index].translateY }] },
             ]}
           >
@@ -75,7 +80,12 @@ export default function ParcoursScreen() {
         ))}
 
         {/* But professionnel rajouté comme carte supplémentaire dans le flow horizontal */}
-        <Animated.View style={[styles.goalCard, { opacity: fadeAnim }]}>
+        <Animated.View style={[
+          styles.goalCard,
+          isTabletOrWeb && { flexBasis: `calc(33.333% - ${Spacing.xxxl}px)` as any },
+          isMobile && { minWidth: '100%' },
+          { opacity: fadeAnim }
+        ]}>
           <Text style={styles.goalIcon}>🎯</Text>
           <Text style={styles.goalTitle}>Projet pro.</Text>
           <View style={styles.entryMidLineDark} />
@@ -143,8 +153,6 @@ const styles = StyleSheet.create({
 
   /* Card Colonne : env 25% de chaque avec layout vertical énorme (70% hauteur) */
   timelineEntryColumn: {
-    flexBasis: isTabletOrWeb ? `calc(33.333% - ${Spacing.xxxl}px)` as any : '100%',
-    minWidth: COLUMN_WIDTH,
     backgroundColor: Colors.bgCard,
     borderRadius: BorderRadius.xl,
     borderWidth: 2,
@@ -154,6 +162,7 @@ const styles = StyleSheet.create({
       ? { shadowColor: Colors.shadowMedium, shadowOffset: { width: 0, height: 15 }, shadowOpacity: 1, shadowRadius: 40 }
       : { elevation: 6, shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.1, shadowRadius: 15 }),
     flexDirection: 'column',
+    minWidth: COLUMN_WIDTH,
   },
 
   /* Ligne visuelle verticale (Optionnel, au centre) */
@@ -222,7 +231,6 @@ const styles = StyleSheet.create({
 
   /* Goal card incorporée pareil */
   goalCard: {
-    flexBasis: isTabletOrWeb ? `calc(33.333% - ${Spacing.xxxl}px)` as any : '100%',
     minWidth: COLUMN_WIDTH,
     backgroundColor: Colors.bgDark,
     borderRadius: BorderRadius.xl,

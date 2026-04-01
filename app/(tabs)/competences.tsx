@@ -2,15 +2,17 @@
  * Compétences Screen - Éléments immenses, 2/3 colonnes avec grande hauteur
  */
 import React, { useEffect, useRef } from 'react';
-import { ScrollView, View, Text, StyleSheet, Animated, Platform, Dimensions } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Animated, Platform, useWindowDimensions } from 'react-native';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { skillCategories, languageSkills } from '@/constants/data';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const isTabletOrWeb = SCREEN_WIDTH > 800;
-const isMobile = SCREEN_WIDTH < 640;
+
 
 export default function CompetencesScreen() {
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const isTabletOrWeb = SCREEN_WIDTH > 800;
+  const isMobile = SCREEN_WIDTH < 640;
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const categoryAnims = useRef(skillCategories.map(() => ({
     opacity: new Animated.Value(0),
@@ -32,34 +34,38 @@ export default function CompetencesScreen() {
 
       {/* Header Immense */}
       <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
-        <View style={styles.headerTextWrap}>
-          <Text style={styles.headerLabel}>EXPERTISE</Text>
-          <Text style={styles.headerTitle}>Compétences techniques</Text>
+        <View style={[styles.headerContent, isTabletOrWeb && { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxxl }]}>
+          <View style={[styles.headerTextWrap, isTabletOrWeb && { minWidth: 300 }]}>
+            <Text style={[styles.headerLabel, !isMobile && { fontSize: FontSizes.md, letterSpacing: 6 }]}>EXPERTISE</Text>
+            <Text style={[styles.headerTitle, !isMobile && { fontSize: FontSizes.display }]}>Compétences techniques</Text>
+          </View>
+          <Text style={[styles.headerDescription, !isMobile && { fontSize: FontSizes.xl, minWidth: 280 }]}>
+            Technologies et langages acquis au cours de ma formation et mes projets.
+          </Text>
         </View>
-        <Text style={styles.headerDescription}>
-          Technologies et langages acquis au cours de ma formation et mes projets.
-        </Text>
       </Animated.View>
 
-      {/* Skills en colonnes très hautes */}
-      <View style={styles.skillsGrid}>
+      {/* Skills Grid */}
+      <View style={[styles.skillsGrid, !isMobile && { padding: Spacing.xxxl, gap: Spacing.xxl }]}>
         {skillCategories.map((category, index) => (
           <Animated.View
             key={index}
             style={[
               styles.skillCard,
+              !isMobile && { padding: Spacing.xxl, minWidth: 308, minHeight: 360 },
+              isTabletOrWeb && { flexBasis: `calc(33.333% - ${Spacing.xxl}px)` as any },
               { opacity: categoryAnims[index].opacity, transform: [{ translateY: categoryAnims[index].translateY }] },
             ]}
           >
-            <View style={styles.skillCardHeader}>
+            <View style={[styles.skillCardHeader, !isMobile && { marginBottom: Spacing.xl, paddingBottom: Spacing.xl }]}>
               <View style={styles.skillCardDot} />
-              <Text style={styles.skillCategoryTitle}>{category.title}</Text>
+              <Text style={[styles.skillCategoryTitle, !isMobile && { fontSize: FontSizes.xl }]}>{category.title}</Text>
             </View>
             <View style={styles.skillsList}>
               {category.skills.map((skill, sIndex) => (
                 <View key={sIndex} style={styles.skillItemRow}>
                   <View style={styles.skillBullet} />
-                  <Text style={styles.skillItemText}>{skill}</Text>
+                  <Text style={[styles.skillItemText, !isMobile && { fontSize: FontSizes.lg }]}>{skill}</Text>
                 </View>
               ))}
             </View>
@@ -67,29 +73,29 @@ export default function CompetencesScreen() {
         ))}
       </View>
 
-      {/* Langues Immense */}
-      <View style={styles.languageSection}>
+      {/* Langues Section */}
+      <View style={[styles.languageSection, !isMobile && { paddingHorizontal: Spacing.xxxl }]}>
         <View style={styles.langHeader}>
           <Text style={styles.headerLabel}>LANGUES</Text>
-          <Text style={styles.langTitle}>{languageSkills.title}</Text>
+          <Text style={[styles.langTitle, !isMobile && { fontSize: FontSizes.display }, isMobile && { fontSize: FontSizes.xxxl }]}>{languageSkills.title}</Text>
           <View style={styles.langDivider} />
         </View>
 
-        <View style={styles.languageCard}>
-          <View style={styles.langRow}>
+        <View style={[styles.languageCard, !isMobile && { padding: Spacing.xxxl }]}>
+          <View style={[styles.langRow, !isMobile && { flexDirection: 'row', alignItems: 'center', gap: Spacing.xl, marginBottom: Spacing.xxl }]}>
             <Text style={styles.languageFlag}>🇬🇧</Text>
-            <View style={styles.languageInfo}>
-              <Text style={styles.languageName}>Anglais</Text>
+            <View style={[styles.languageInfo, isMobile && { width: '100%' }]}>
+              <Text style={[styles.languageName, !isMobile && { fontSize: FontSizes.xxl }, isMobile && { fontSize: FontSizes.xl }]}>Anglais</Text>
               <Text style={styles.languageLevel}>Niveau avancé</Text>
             </View>
             <View style={styles.languageBadge}>
-              <Text style={styles.languageBadgeText}>90%</Text>
+              <Text style={[styles.languageBadgeText, !isMobile && { fontSize: FontSizes.xl }, isMobile && { fontSize: FontSizes.lg }]}>90%</Text>
             </View>
           </View>
           <View style={styles.progressBg}>
             <View style={styles.progressFill} />
           </View>
-          <Text style={styles.languageDescription}>{languageSkills.description}</Text>
+          <Text style={[styles.languageDescription, !isMobile && { fontSize: FontSizes.xl }, isMobile && { fontSize: FontSizes.md }]}>{languageSkills.description}</Text>
         </View>
       </View>
 
@@ -107,57 +113,55 @@ const styles = StyleSheet.create({
 
   /* Header */
   header: {
-    paddingHorizontal: isMobile ? Spacing.xl : Spacing.xxxl,
-    paddingTop: Spacing.xl,
-    paddingBottom: Spacing.xl,
     backgroundColor: Colors.bgSecondary,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
-    flexDirection: isTabletOrWeb ? 'row' : 'column',
-    alignItems: isTabletOrWeb ? 'center' : 'flex-start',
-    gap: isMobile ? Spacing.lg : Spacing.xxxl,
   },
-  headerTextWrap: { flex: 1, minWidth: 300 },
+  headerContent: {
+    paddingHorizontal: Spacing.xl,
+    paddingTop: Spacing.xl,
+    paddingBottom: Spacing.xl,
+    flexDirection: 'column',
+    gap: Spacing.lg,
+  },
+  headerTextWrap: { flex: 1 },
   headerLabel: {
-    fontSize: FontSizes.md,
-    letterSpacing: 6,
+    fontSize: FontSizes.sm,
+    letterSpacing: 4,
     color: Colors.accent,
     fontWeight: '800',
     marginBottom: Spacing.md,
     textTransform: 'uppercase',
   },
   headerTitle: {
-    fontSize: FontSizes.display,
+    fontSize: FontSizes.xxl,
     fontWeight: '800',
     color: Colors.textPrimary,
     letterSpacing: -1,
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
   },
   headerDescription: {
-    flex: 1,
-    fontSize: isMobile ? FontSizes.lg : FontSizes.xl,
+    fontSize: FontSizes.md,
     color: Colors.textSecondary,
-    lineHeight: (isMobile ? FontSizes.lg : FontSizes.xl) * 1.5,
-    minWidth: 280,
+    lineHeight: FontSizes.md * 1.5,
+    width: '100%',
   },
 
-  /* Skills grid en layout vertical = 2/3 colonnes */
+  /* Skills grid */
   skillsGrid: {
-    padding: isMobile ? Spacing.xl : Spacing.xxxl,
+    padding: Spacing.xl,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: isMobile ? Spacing.lg : Spacing.xxl,
+    gap: Spacing.lg,
     justifyContent: 'center',
   },
   skillCard: {
     backgroundColor: Colors.bgCard,
     borderRadius: BorderRadius.xl,
-    padding: isMobile ? Spacing.xl : Spacing.xxl,
+    padding: Spacing.xl,
     borderWidth: 2,
     borderColor: Colors.border,
-    flexBasis: isTabletOrWeb ? `calc(33.333% - ${Spacing.xxl}px)` as any : '100%',
-    minWidth: isMobile ? 280 : 308,
-    minHeight: isMobile ? 0 : 360,
+    flexBasis: '100%',
     overflow: 'hidden',
     ...(Platform.OS === 'web'
       ? { shadowColor: Colors.shadowMedium, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 1, shadowRadius: 30 }
@@ -167,8 +171,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.md,
-    marginBottom: isMobile ? Spacing.lg : Spacing.xl,
-    paddingBottom: isMobile ? Spacing.lg : Spacing.xl,
+    marginBottom: Spacing.lg,
+    paddingBottom: Spacing.lg,
     borderBottomWidth: 2,
     borderBottomColor: Colors.borderSubtle,
   },
@@ -179,10 +183,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.accent,
   },
   skillCategoryTitle: {
-    fontSize: isMobile ? FontSizes.lg : FontSizes.xl,
+    fontSize: 14,
     fontWeight: '800',
     color: Colors.textPrimary,
     flex: 1,
+    flexShrink: 1,
+    flexWrap: 'wrap',
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
   },
   skillsList: { gap: Spacing.md },
@@ -199,14 +205,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.textMuted,
   },
   skillItemText: {
-    fontSize: isMobile ? FontSizes.md : FontSizes.lg,
+    fontSize: FontSizes.md,
     color: Colors.textSecondary,
     flex: 1,
   },
 
-  /* Langues Immense */
+  /* Langues */
   languageSection: {
-    paddingHorizontal: isMobile ? Spacing.xl : Spacing.xxxl,
+    paddingHorizontal: Spacing.xl,
     paddingTop: Spacing.xxl,
     paddingBottom: Spacing.xxl,
     borderTopWidth: 2,
@@ -219,7 +225,6 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.xxl,
   },
   langTitle: {
-    fontSize: isMobile ? FontSizes.xxxl : FontSizes.display,
     fontWeight: '800',
     color: Colors.textPrimary,
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
@@ -233,7 +238,7 @@ const styles = StyleSheet.create({
   languageCard: {
     backgroundColor: Colors.bgCard,
     borderRadius: BorderRadius.xl,
-    padding: isMobile ? Spacing.xl : Spacing.xxxl,
+    padding: Spacing.xl,
     borderWidth: 2,
     borderColor: Colors.border,
     ...(Platform.OS === 'web'
@@ -241,15 +246,15 @@ const styles = StyleSheet.create({
       : { elevation: 6, shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.1, shadowRadius: 15 }),
   },
   langRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: isMobile ? Spacing.lg : Spacing.xl,
-    marginBottom: isMobile ? Spacing.xl : Spacing.xxl,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: Spacing.md,
+    marginBottom: Spacing.xl,
   },
   languageFlag: { fontSize: FontSizes.display },
-  languageInfo: { flex: 1 },
-  languageName: { fontSize: isMobile ? FontSizes.xl : FontSizes.xxl, fontWeight: '800', color: Colors.textPrimary },
-  languageLevel: { fontSize: FontSizes.lg, color: Colors.textMuted, marginTop: Spacing.xs },
+  languageInfo: { flex: 1, marginVertical: Spacing.sm },
+  languageName: { fontWeight: '800', color: Colors.textPrimary },
+  languageLevel: { color: Colors.textMuted, marginTop: Spacing.xs },
   languageBadge: {
     backgroundColor: Colors.accentSubtle,
     paddingHorizontal: Spacing.xl,
@@ -258,7 +263,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.borderAccent,
   },
-  languageBadgeText: { fontSize: isMobile ? FontSizes.lg : FontSizes.xl, fontWeight: '800', color: Colors.accent },
+  languageBadgeText: { fontWeight: '800', color: Colors.accent },
   progressBg: {
     height: 12,
     backgroundColor: Colors.borderSubtle,
@@ -273,8 +278,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   languageDescription: {
-    fontSize: isMobile ? FontSizes.md : FontSizes.xl,
     color: Colors.textSecondary,
-    lineHeight: (isMobile ? FontSizes.md : FontSizes.xl) * 1.6,
+    lineHeight: FontSizes.md * 1.6,
   },
 });

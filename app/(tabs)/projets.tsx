@@ -4,14 +4,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   ScrollView, View, Text, Image, StyleSheet, Pressable,
-  Animated, Platform, Dimensions,
+  Animated, Platform, useWindowDimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { projects } from '@/constants/data';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const isTabletOrWeb = SCREEN_WIDTH > 800;
+
 
 const projectImages: Record<string, any> = {
   jardinageons: require('@/assets/images/Jardinageons.png'),
@@ -21,12 +20,17 @@ const projectImages: Record<string, any> = {
 
 const COLUMN_WIDTH = 418; // slightly smaller to fit better side-by-side
 
-function ProjectCardComp({ project, animStyle }: any) {
+function ProjectCardComp({ project, animStyle, isTabletOrWeb }: any) {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Animated.View style={[styles.cardWrap, animStyle]}>
+    <Animated.View style={[
+      styles.cardWrap, 
+      isTabletOrWeb && { flexBasis: `calc(33.333% - ${Spacing.xxl}px)` as any },
+      !isTabletOrWeb && { flexBasis: '100%', minWidth: '100%' },
+      animStyle
+    ]}>
       <Pressable
         style={({ pressed }) => [
           styles.projectCard,
@@ -76,6 +80,10 @@ function ProjectCardComp({ project, animStyle }: any) {
 }
 
 export default function ProjetsScreen() {
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const isTabletOrWeb = SCREEN_WIDTH > 800;
+  const isMobile = SCREEN_WIDTH < 640;
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const projectAnims = useRef(projects.map(() => ({
     opacity: new Animated.Value(0),
@@ -95,7 +103,11 @@ export default function ProjetsScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
       {/* Header */}
-      <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
+      <Animated.View style={[
+        styles.header, 
+        isTabletOrWeb && { flexDirection: 'row', alignItems: 'center' },
+        { opacity: fadeAnim }
+      ]}>
         <View style={styles.headerLeft}>
           <Text style={styles.headerLabel}>RÉALISATIONS</Text>
           <Text style={styles.headerTitle}>Mes projets</Text>
@@ -110,6 +122,7 @@ export default function ProjetsScreen() {
           <ProjectCardComp
             key={project.id}
             project={project}
+            isTabletOrWeb={isTabletOrWeb}
             animStyle={{
               opacity: projectAnims[index].opacity,
               transform: [{ translateY: projectAnims[index].translateY }]
@@ -138,8 +151,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgSecondary,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
-    flexDirection: isTabletOrWeb ? 'row' : 'column',
-    alignItems: isTabletOrWeb ? 'center' : 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     gap: Spacing.xxl,
   },
   headerLeft: { flex: 1, minWidth: 250 },
@@ -176,7 +189,6 @@ const styles = StyleSheet.create({
   },
 
   cardWrap: {
-    flexBasis: isTabletOrWeb ? `calc(33.333% - ${Spacing.xxl}px)` as any : '100%',
     minWidth: COLUMN_WIDTH,
   },
 

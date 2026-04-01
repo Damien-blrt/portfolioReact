@@ -8,17 +8,20 @@ import {
   Text,
   Image,
   StyleSheet,
-  Dimensions,
+  useWindowDimensions,
   Animated,
   Platform,
 } from 'react-native';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { personalInfo, aboutCards, qualities } from '@/constants/data';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const isTabletOrWeb = SCREEN_WIDTH > 800;
+
 
 export default function HomeScreen() {
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const isTabletOrWeb = SCREEN_WIDTH > 800;
+  const isMobile = SCREEN_WIDTH < 640;
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
   const cardAnims = useRef(aboutCards.map(() => ({
@@ -47,19 +50,27 @@ export default function HomeScreen() {
       showsVerticalScrollIndicator={false}
     >
 
-      {/* ── Hero immense : photo et texte côte à côte ── */}
-      <Animated.View style={[styles.hero, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+      {/* Hero immense */}
+      <Animated.View style={[
+        styles.hero,
+        isTabletOrWeb && { flexDirection: 'row', gap: Spacing.xxl },
+        { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+      ]}>
         <Image source={require('@/assets/images/f1.jpg')} style={styles.heroImage} resizeMode="cover" />
-        <View style={styles.heroText}>
+        <View style={[
+          styles.heroText,
+          isTabletOrWeb && { flex: 1, alignItems: 'flex-start' },
+          !isTabletOrWeb && { alignItems: 'center' }
+        ]}>
           <Text style={styles.heroLabel}>PORTFOLIO</Text>
-          <Text style={styles.heroName}>{personalInfo.name}</Text>
-          <Text style={styles.heroTitle} numberOfLines={2}>{personalInfo.title}</Text>
+          <Text style={[styles.heroName, !isTabletOrWeb && { textAlign: 'center' }]}>{personalInfo.name}</Text>
+          <Text style={[styles.heroTitle, !isTabletOrWeb && { textAlign: 'center' }]} numberOfLines={2}>{personalInfo.title}</Text>
           <View style={styles.heroDivider} />
           <Text style={styles.heroEmail}>{personalInfo.email}</Text>
         </View>
       </Animated.View>
 
-      {/* ── Section À propos ── */}
+      {/* Section À propos */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionLabel}>À PROPOS</Text>
@@ -67,13 +78,13 @@ export default function HomeScreen() {
           <View style={styles.sectionDivider} />
         </View>
 
-        {/* Cartes immenses côte à côte (environ 25-30% de la largeur sur grand écran) */}
         <View style={styles.cardsRow}>
           {aboutCards.map((card, index) => (
             <Animated.View
               key={index}
               style={[
                 styles.aboutCard,
+                isTabletOrWeb && { flexBasis: `calc(33.333% - ${Spacing.xl}px)` as any },
                 { opacity: cardAnims[index].opacity, transform: [{ translateY: cardAnims[index].translateY }] },
               ]}
             >
@@ -92,7 +103,7 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      {/* ── Section Qualités ── */}
+      {/* Section Qualités */}
       <View style={styles.qualitiesSection}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionLabel}>QUALITÉS</Text>
@@ -100,7 +111,7 @@ export default function HomeScreen() {
           <View style={styles.sectionDivider} />
         </View>
 
-        <View style={styles.qualitiesRow}>
+        <View style={[styles.qualitiesRow, isTabletOrWeb && { flexDirection: 'row' }]}>
           <View style={styles.qualitiesLeft}>
             <Text style={styles.qualitiesIntro}>{qualities.intro}</Text>
             <View style={styles.achievementBox}>
@@ -133,10 +144,8 @@ const styles = StyleSheet.create({
 
   /* Hero immense */
   hero: {
-    flexDirection: isTabletOrWeb ? 'row' : 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: Spacing.xxl,
     paddingHorizontal: Spacing.xxl,
     paddingVertical: Spacing.xxxl,
     backgroundColor: Colors.bgSecondary,
@@ -155,8 +164,6 @@ const styles = StyleSheet.create({
       : { elevation: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.15, shadowRadius: 20 }),
   },
   heroText: {
-    flex: isTabletOrWeb ? 1 : undefined,
-    alignItems: isTabletOrWeb ? 'flex-start' : 'center',
     maxWidth: 900,
   },
   heroLabel: {
@@ -173,7 +180,6 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
     letterSpacing: -1.5,
     lineHeight: FontSizes.hero * 1.1,
-    textAlign: isTabletOrWeb ? 'left' : 'center',
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
   },
   heroTitle: {
@@ -181,7 +187,6 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
     marginTop: Spacing.sm,
     fontWeight: '500',
-    textAlign: isTabletOrWeb ? 'left' : 'center',
   },
   heroDivider: {
     width: 120,
@@ -244,7 +249,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: Colors.border,
     // 25% to 30% des largeurs, environ
-    flexBasis: isTabletOrWeb ? `calc(33.333% - ${Spacing.xl}px)` as any : '100%',
+    flexBasis: '100%',
     minWidth: 308,
     minHeight: 315,
     overflow: 'hidden',
@@ -292,7 +297,6 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.border,
   },
   qualitiesRow: {
-    flexDirection: isTabletOrWeb ? 'row' : 'column',
     gap: Spacing.xxxl,
     alignItems: 'stretch',
     justifyContent: 'center',
