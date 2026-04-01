@@ -8,6 +8,7 @@ import { skillCategories, languageSkills } from '@/constants/data';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const isTabletOrWeb = SCREEN_WIDTH > 800;
+const isMobile = SCREEN_WIDTH < 640;
 
 export default function CompetencesScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -100,13 +101,13 @@ export default function CompetencesScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.bgPrimary },
   content: {
-    paddingTop: Platform.OS === 'web' ? 140 : 160,
+    paddingTop: Platform.OS === 'web' ? 120 : 130,
     paddingBottom: Spacing.xxxl
   },
 
   /* Header */
   header: {
-    paddingHorizontal: Spacing.xxxl,
+    paddingHorizontal: isMobile ? Spacing.xl : Spacing.xxxl,
     paddingTop: Spacing.xl,
     paddingBottom: Spacing.xl,
     backgroundColor: Colors.bgSecondary,
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.border,
     flexDirection: isTabletOrWeb ? 'row' : 'column',
     alignItems: isTabletOrWeb ? 'center' : 'flex-start',
-    gap: Spacing.xxxl,
+    gap: isMobile ? Spacing.lg : Spacing.xxxl,
   },
   headerTextWrap: { flex: 1, minWidth: 300 },
   headerLabel: {
@@ -134,29 +135,29 @@ const styles = StyleSheet.create({
   },
   headerDescription: {
     flex: 1,
-    fontSize: FontSizes.xl,
+    fontSize: isMobile ? FontSizes.lg : FontSizes.xl,
     color: Colors.textSecondary,
-    lineHeight: FontSizes.xl * 1.5,
+    lineHeight: (isMobile ? FontSizes.lg : FontSizes.xl) * 1.5,
     minWidth: 280,
   },
 
   /* Skills grid en layout vertical = 2/3 colonnes */
   skillsGrid: {
-    padding: Spacing.xxxl,
+    padding: isMobile ? Spacing.xl : Spacing.xxxl,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: Spacing.xxl,
+    gap: isMobile ? Spacing.lg : Spacing.xxl,
     justifyContent: 'center',
   },
   skillCard: {
     backgroundColor: Colors.bgCard,
     borderRadius: BorderRadius.xl,
-    padding: Spacing.xxl,
+    padding: isMobile ? Spacing.xl : Spacing.xxl,
     borderWidth: 2,
     borderColor: Colors.border,
     flexBasis: isTabletOrWeb ? `calc(33.333% - ${Spacing.xxl}px)` as any : '100%',
-    minWidth: 308,
-    minHeight: 360,
+    minWidth: isMobile ? 280 : 308,
+    minHeight: isMobile ? 0 : 360,
     overflow: 'hidden',
     ...(Platform.OS === 'web'
       ? { shadowColor: Colors.shadowMedium, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 1, shadowRadius: 30 }
@@ -166,8 +167,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.md,
-    marginBottom: Spacing.xl,
-    paddingBottom: Spacing.xl,
+    marginBottom: isMobile ? Spacing.lg : Spacing.xl,
+    paddingBottom: isMobile ? Spacing.lg : Spacing.xl,
     borderBottomWidth: 2,
     borderBottomColor: Colors.borderSubtle,
   },
@@ -178,9 +179,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.accent,
   },
   skillCategoryTitle: {
-    fontSize: FontSizes.xl,
+    fontSize: isMobile ? FontSizes.lg : FontSizes.xl,
     fontWeight: '800',
     color: Colors.textPrimary,
+    flex: 1,
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
   },
   skillsList: { gap: Spacing.md },
@@ -197,14 +199,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.textMuted,
   },
   skillItemText: {
-    fontSize: FontSizes.lg,
+    fontSize: isMobile ? FontSizes.md : FontSizes.lg,
     color: Colors.textSecondary,
     flex: 1,
   },
 
   /* Langues Immense */
   languageSection: {
-    paddingHorizontal: Spacing.xxxl,
+    paddingHorizontal: isMobile ? Spacing.xl : Spacing.xxxl,
     paddingTop: Spacing.xxl,
     paddingBottom: Spacing.xxl,
     borderTopWidth: 2,
@@ -217,7 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.xxl,
   },
   langTitle: {
-    fontSize: FontSizes.display,
+    fontSize: isMobile ? FontSizes.xxxl : FontSizes.display,
     fontWeight: '800',
     color: Colors.textPrimary,
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
   languageCard: {
     backgroundColor: Colors.bgCard,
     borderRadius: BorderRadius.xl,
-    padding: Spacing.xxxl,
+    padding: isMobile ? Spacing.xl : Spacing.xxxl,
     borderWidth: 2,
     borderColor: Colors.border,
     ...(Platform.OS === 'web'
@@ -241,12 +243,12 @@ const styles = StyleSheet.create({
   langRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.xl,
-    marginBottom: Spacing.xxl,
+    gap: isMobile ? Spacing.lg : Spacing.xl,
+    marginBottom: isMobile ? Spacing.xl : Spacing.xxl,
   },
   languageFlag: { fontSize: FontSizes.display },
   languageInfo: { flex: 1 },
-  languageName: { fontSize: FontSizes.xxl, fontWeight: '800', color: Colors.textPrimary },
+  languageName: { fontSize: isMobile ? FontSizes.xl : FontSizes.xxl, fontWeight: '800', color: Colors.textPrimary },
   languageLevel: { fontSize: FontSizes.lg, color: Colors.textMuted, marginTop: Spacing.xs },
   languageBadge: {
     backgroundColor: Colors.accentSubtle,
@@ -256,7 +258,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.borderAccent,
   },
-  languageBadgeText: { fontSize: FontSizes.xl, fontWeight: '800', color: Colors.accent },
+  languageBadgeText: { fontSize: isMobile ? FontSizes.lg : FontSizes.xl, fontWeight: '800', color: Colors.accent },
   progressBg: {
     height: 12,
     backgroundColor: Colors.borderSubtle,
@@ -271,8 +273,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   languageDescription: {
-    fontSize: FontSizes.xl,
+    fontSize: isMobile ? FontSizes.md : FontSizes.xl,
     color: Colors.textSecondary,
-    lineHeight: FontSizes.xl * 1.6,
+    lineHeight: (isMobile ? FontSizes.md : FontSizes.xl) * 1.6,
   },
 });
