@@ -39,31 +39,32 @@ export default function ParcoursScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 
       {/* Header Immense */}
-      <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
-        <Text style={styles.headerLabel}>FORMATION</Text>
-        <Text style={styles.headerTitle}>{parcours.title}</Text>
+      <Animated.View style={[styles.header, { opacity: fadeAnim }, isMobile && { paddingHorizontal: Spacing.xl, paddingTop: Spacing.xl, paddingBottom: Spacing.xl }]}>
+        <Text style={[styles.headerLabel, isMobile && { fontSize: FontSizes.sm, letterSpacing: 4 }]}>FORMATION</Text>
+        <Text style={[styles.headerTitle, isMobile && { fontSize: FontSizes.display }]}>{parcours.title}</Text>
         <View style={styles.headerDivider} />
       </Animated.View>
 
       {/* Horizontal style timeline - side by side blocks */}
-      <View style={styles.timelineHorizontal}>
+      <View style={[styles.timelineHorizontal, isMobile && { padding: Spacing.xl }]}>
         {parcours.entries.map((entry, index) => (
           <Animated.View
             key={index}
             style={[
               styles.timelineEntryColumn,
+              !isMobile && { minWidth: COLUMN_WIDTH },
               isTabletOrWeb && { flexBasis: `calc(33.333% - ${Spacing.xxxl}px)` as any },
-              isMobile && { minWidth: '100%' },
+              isMobile && { width: '100%' },
               { opacity: entryAnims[index].opacity, transform: [{ translateY: entryAnims[index].translateY }] },
             ]}
           >
             {/* Haut : l'image et l'année */}
-            <View style={styles.entryCardTop}>
-              <View style={styles.imageWrap}>
-                <Image source={images[entry.image]} style={styles.entryImage} resizeMode="contain" />
+            <View style={[styles.entryCardTop, isMobile && { paddingVertical: Spacing.lg, paddingHorizontal: Spacing.lg }]}>
+              <View style={[styles.imageWrap, isMobile && { width: 120, height: 120, borderRadius: 60 }]}>
+                <Image source={images[entry.image]} style={[styles.entryImage, isMobile && { width: 80, height: 80 }]} resizeMode="contain" />
               </View>
-              <View style={styles.entryBadge}>
-                <Text style={styles.entryBadgeText}>{entry.period}</Text>
+              <View style={[styles.entryBadge, isMobile && { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm }]}>
+                <Text style={[styles.entryBadgeText, isMobile && { fontSize: FontSizes.md }]}>{entry.period}</Text>
               </View>
             </View>
 
@@ -71,9 +72,9 @@ export default function ParcoursScreen() {
             <View style={styles.entryMidLine} />
 
             {/* Bas : texte */}
-            <View style={styles.entryCardBottom}>
-              <Text style={styles.entryInstitution}>{entry.institution}</Text>
-              <Text style={styles.entryDescription}>{entry.description}</Text>
+            <View style={[styles.entryCardBottom, isMobile && { padding: Spacing.xl }]}>
+              <Text style={[styles.entryInstitution, isMobile && { fontSize: FontSizes.xl }]}>{entry.institution}</Text>
+              <Text style={[styles.entryDescription, isMobile && { fontSize: FontSizes.lg, lineHeight: FontSizes.lg * 1.6 }]}>{entry.description}</Text>
             </View>
 
           </Animated.View>
@@ -82,14 +83,15 @@ export default function ParcoursScreen() {
         {/* But professionnel rajouté comme carte supplémentaire dans le flow horizontal */}
         <Animated.View style={[
           styles.goalCard,
+          !isMobile && { minWidth: COLUMN_WIDTH },
           isTabletOrWeb && { flexBasis: `calc(33.333% - ${Spacing.xxxl}px)` as any },
-          isMobile && { minWidth: '100%' },
+          isMobile && { width: '100%', padding: Spacing.xl },
           { opacity: fadeAnim }
         ]}>
-          <Text style={styles.goalIcon}>🎯</Text>
-          <Text style={styles.goalTitle}>Projet pro.</Text>
+          <Text style={[styles.goalIcon, isMobile && { fontSize: 60 }]}>🎯</Text>
+          <Text style={[styles.goalTitle, isMobile && { fontSize: FontSizes.xxl }]}>Projet pro.</Text>
           <View style={styles.entryMidLineDark} />
-          <Text style={styles.goalText}>{parcours.futureGoal}</Text>
+          <Text style={[styles.goalText, isMobile && { fontSize: FontSizes.lg, lineHeight: FontSizes.lg * 1.6 }]}>{parcours.futureGoal}</Text>
         </Animated.View>
 
       </View>
@@ -162,7 +164,6 @@ const styles = StyleSheet.create({
       ? { shadowColor: Colors.shadowMedium, shadowOffset: { width: 0, height: 15 }, shadowOpacity: 1, shadowRadius: 40 }
       : { elevation: 6, shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.1, shadowRadius: 15 }),
     flexDirection: 'column',
-    minWidth: COLUMN_WIDTH,
   },
 
   /* Ligne visuelle verticale (Optionnel, au centre) */
@@ -231,7 +232,6 @@ const styles = StyleSheet.create({
 
   /* Goal card incorporée pareil */
   goalCard: {
-    minWidth: COLUMN_WIDTH,
     backgroundColor: Colors.bgDark,
     borderRadius: BorderRadius.xl,
     flexDirection: 'column',
