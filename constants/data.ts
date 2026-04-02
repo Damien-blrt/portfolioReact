@@ -15,9 +15,9 @@ export const aboutCards = [
     title: 'Qui suis-je ?',
     paragraphs: [
       "Je m'appelle Damien Ballerat et je suis actuellement étudiant en 2ème année au BUT informatique de Clermont-Ferrand.",
-      "Grâce à cette formation, j'ai acquis la capacité de concevoir des programmes informatiques dans différents langages de programmation, ce qui me réjouit.",
-      "J'ai participé à la Coupe de France de basketball UNSS Excellence avec l'équipe du lycée en terminale, où j'ai pu jouer contre certains des plus grands espoirs du pays.",
-      "Je m'intéresse également aux jeux vidéo de tous genres tels que Balatro ou Cyberpunk 2077 pour ne citer qu'eux.",
+      "Grâce à cette formation, j'ai acquis la capacité de concevoir des programmes informatiques dans différents langages de programmation.",
+      "J'ai participé à la Coupe de France de basketball UNSS Excellence avec l'équipe du lycée en terminale, où j'ai pu jouer contre certaines des meilleures équipes du pays.",
+      "Je m'intéresse également aux jeux vidéo de tous genres.",
     ],
   },
   {
@@ -25,7 +25,7 @@ export const aboutCards = [
     title: 'Mes qualités',
     paragraphs: [
       "La minutie guide chaque ligne de code que j'écris, tandis que ma patience me permet de résoudre méthodiquement les défis techniques les plus complexes.",
-      "Mon ambition me pousse constamment à élargir mes compétences, notamment en C, C++, C#, Python, ainsi qu'en SQL pour la gestion de bases de données.",
+      "Mon ambition me pousse constamment à élargir mes compétences, notamment en programmation dans le cadre personnel et professionnel.",
       "Mon sens aigu du travail se reflète dans mon investissement tant dans mes projets informatiques que dans ma pratique intensive du basketball.",
     ],
   },

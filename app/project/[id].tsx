@@ -20,7 +20,7 @@ import { projects, Project } from '@/constants/data';
 
 const projectImages: Record<string, any> = {
   jardinageons: require('@/assets/images/Jardinageons.png'),
-  artistbot: require('@/assets/images/Pokerandom.png'),
+  artistbot: require('@/assets/images/artistbot.png'),
   pokerandom: require('@/assets/images/Pokerandom.png'),
 };
 
@@ -375,18 +375,18 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     ...(Platform.OS === 'web'
       ? {
-          shadowColor: Colors.shadowLight,
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: 1,
-          shadowRadius: 4,
-        }
+        shadowColor: Colors.shadowLight,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 1,
+        shadowRadius: 4,
+      }
       : {
-          elevation: 1,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: 0.04,
-          shadowRadius: 4,
-        }),
+        elevation: 1,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.04,
+        shadowRadius: 4,
+      }),
   },
   archCardDot: {
     width: 8,
