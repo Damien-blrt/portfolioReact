@@ -53,7 +53,7 @@ export const qualities = {
 export const skillCategories = [
   {
     title: 'Programmation',
-    skills: ['C', 'C++', 'Python', 'C# (.NET, XAML)', 'Java', 'JavaFX', 'Shell Unix'],
+    skills: ['C', 'C++', 'Python', 'C# (.NET, XAML, MAUI, Entity Framework)', 'Java', 'JavaFX', 'Shell Unix'],
   },
   {
     title: 'Web',
@@ -61,7 +61,7 @@ export const skillCategories = [
   },
   {
     title: 'Base de données',
-    skills: ['PL/pgSQL'],
+    skills: ['PostgreSQL', 'PL/pgSQL', 'MongoDB'],
   },
   {
     title: 'Développement mobile',
@@ -69,7 +69,7 @@ export const skillCategories = [
   },
   {
     title: 'Outils et technologies',
-    skills: ['Git (utilisation fréquente)', 'Docker (déploiement)', 'Tests xUnit', 'Administration réseau (initié)'],
+    skills: ['Git (utilisation fréquente)', 'Docker (déploiement)', 'Tests xUnit / jUnit', 'Administration réseau (initié)'],
   },
   {
     title: 'Architecture et conception',
