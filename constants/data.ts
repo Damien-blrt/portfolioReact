@@ -87,11 +87,10 @@ export const parcours = {
   title: 'Parcours scolaire',
   entries: [
     {
-      institution: 'Lycée Godefroy-de-Bouillon',
-      period: 'Baccalauréat général',
-      description:
-        "Baccalauréat général avec les spécialités physique-chimie et sciences économiques et sociales. Cette formation m'a permis d'acquérir des bases solides en sciences et en analyse, compétences que je continue de développer dans mon parcours actuel.",
-      image: 'lycee',
+      institution: 'Stage de fin d\'études - Phenikaa (Hanoï, Vietnam)',
+      period: 'Avril 2026 - Juin 2026',
+      description: 'Leveraging AI to navigate and analyze the complex, unstructured urban environment of Hanoi, supporting Phenikaa’s Autonomous Vehicle and Traffic Monitoring projects.\nHarnessing Large Language Models (LLMs) for specific domains such as Education, Legal support, and Customer Service, with a focus on Vietnamese-English cross-lingual capabilities.\nAssisting medical professionals in diagnosis and treatment planning by analyzing X-rays, CT scans, and MRI data.',
+      image: 'vietnam',
     },
     {
       institution: 'BUT Informatique - Clermont-Ferrand',
@@ -101,10 +100,11 @@ export const parcours = {
       image: 'iut',
     },
     {
-      institution: 'Stage de fin d\'études - Phenikaa (Hanoï, Vietnam)',
-      period: 'Avril 2026 - Juin 2026',
-      description: 'Leveraging AI to navigate and analyze the complex, unstructured urban environment of Hanoi, supporting Phenikaa’s Autonomous Vehicle and Traffic Monitoring projects.\nHarnessing Large Language Models (LLMs) for specific domains such as Education, Legal support, and Customer Service, with a focus on Vietnamese-English cross-lingual capabilities.\nAssisting medical professionals in diagnosis and treatment planning by analyzing X-rays, CT scans, and MRI data.',
-      image: 'vietnam',
+      institution: 'Lycée Godefroy-de-Bouillon',
+      period: 'Baccalauréat général',
+      description:
+        "Baccalauréat général avec les spécialités physique-chimie et sciences économiques et sociales. Cette formation m'a permis d'acquérir des bases solides en sciences et en analyse, compétences que je continue de développer dans mon parcours actuel.",
+      image: 'lycee',
     },
   ],
   futureGoal:
