@@ -20,9 +20,10 @@ const projectImages: Record<string, any> = {
 
 const COLUMN_WIDTH = 418; // slightly smaller to fit better side-by-side
 
-function ProjectCardComp({ project, animStyle, isTabletOrWeb }: any) {
+function ProjectCardComp({ project, animStyle, isTabletOrWeb, hoveredProjectId, setHoveredProjectId }: any) {
   const router = useRouter();
-  const [isHovered, setIsHovered] = useState(false);
+  const isHovered = hoveredProjectId === project.id;
+  const isAnotherHovered = hoveredProjectId !== null && hoveredProjectId !== project.id;
 
   return (
     <Animated.View style={[
@@ -35,11 +36,12 @@ function ProjectCardComp({ project, animStyle, isTabletOrWeb }: any) {
         style={({ pressed }) => [
           styles.projectCard,
           pressed && styles.projectCardPressed,
-          isHovered && styles.projectCardHovered
+          isHovered && styles.projectCardHovered,
+          isAnotherHovered && styles.projectCardBlurred
         ]}
         onPress={() => router.push(`/project/${project.id}`)}
-        onHoverIn={() => setIsHovered(true)}
-        onHoverOut={() => setIsHovered(false)}
+        onHoverIn={() => setHoveredProjectId(project.id)}
+        onHoverOut={() => setHoveredProjectId(null)}
         accessibilityRole="button"
       >
         <View style={styles.projectImageContainer}>
@@ -67,12 +69,7 @@ function ProjectCardComp({ project, animStyle, isTabletOrWeb }: any) {
             )}
           </View>
 
-          <View style={[styles.viewBtnWrapper, isHovered && styles.viewBtnWrapperHovered]}>
-            <Text style={styles.viewBtnText}>Voir le détail</Text>
-            {isHovered && (
-              <Text style={styles.viewBtnIcon}> 👁️</Text>
-            )}
-          </View>
+
         </View>
       </Pressable>
     </Animated.View>
@@ -83,6 +80,8 @@ export default function ProjetsScreen() {
   const { width: SCREEN_WIDTH } = useWindowDimensions();
   const isTabletOrWeb = SCREEN_WIDTH > 800;
   const isMobile = SCREEN_WIDTH < 640;
+
+  const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const projectAnims = useRef(projects.map(() => ({
@@ -127,6 +126,8 @@ export default function ProjetsScreen() {
               opacity: projectAnims[index].opacity,
               transform: [{ translateY: projectAnims[index].translateY }]
             }}
+            hoveredProjectId={hoveredProjectId}
+            setHoveredProjectId={setHoveredProjectId}
           />
         ))}
       </View>
@@ -206,7 +207,12 @@ const styles = StyleSheet.create({
   },
   projectCardHovered: {
     borderColor: Colors.accent,
+    borderWidth: 4,
     ...(Platform.OS === 'web' && { transform: [{ translateY: -4 }] })
+  },
+  projectCardBlurred: {
+    opacity: 0.6,
+    ...(Platform.OS === 'web' && { filter: 'blur(4px)' } as any)
   },
   projectCardPressed: {
     opacity: 0.95,
@@ -284,31 +290,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.accentSubtle,
     borderColor: Colors.borderAccent,
   },
-  techTagMoreText: { color: Colors.accent },
-
-  viewBtnWrapper: {
-    backgroundColor: Colors.bgDark,
-    borderWidth: 2,
-    borderColor: Colors.borderAccent,
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.xl,
-    borderRadius: BorderRadius.full,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  viewBtnWrapperHovered: {
-    backgroundColor: Colors.accent,
-  },
-  viewBtnText: {
-    fontSize: FontSizes.lg,
-    fontWeight: '800',
-    color: Colors.textLight,
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-  },
-  viewBtnIcon: {
-    fontSize: FontSizes.xl,
-    marginLeft: Spacing.sm,
-  }
+  techTagMoreText: { color: Colors.accent }
 });
