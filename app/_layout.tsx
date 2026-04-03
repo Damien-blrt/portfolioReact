@@ -14,22 +14,7 @@ export default function RootLayout() {
       <Head>
         <title>Damien BALLERAT</title>
       </Head>
-      {Platform.OS === 'web' && (
-        <style type="text/css">{`
-          body {
-            zoom: 0.8;
-          }
-          /* Fallback pour Firefox qui ne supporte pas zoom */
-          @-moz-document url-prefix() {
-            body {
-              transform: scale(0.8);
-              transform-origin: top left;
-              width: 125vw;
-              min-height: 125vh;
-            }
-          }
-        `}</style>
-      )}
+      {/* Suppression du zoom global */}
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false, title: "Damien BALLERAT" }} />
         <Stack.Screen
