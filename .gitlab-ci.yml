@@ -30,7 +30,7 @@ deploy-portfolio:
     CONTAINER_HTTP_PORT: 80
     NAMESPACE_TOKEN: $DEPLOY_TOKEN
     NAMESPACE_NAME: daballerat
-    CONTAINER_CPU: 0.5
-    CONTAINER_RAM: 512M
+    CONTAINER_CPU: 0.1
+    CONTAINER_RAM: 128M
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
