@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import { ScrollView, View, Text, StyleSheet, Animated, Platform, useWindowDimensions } from 'react-native';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { skillCategories, languageSkills } from '@/constants/data';
+import HoneycombBackground from '@/components/HoneycombBackground';
 
 
 
@@ -32,18 +33,21 @@ export default function CompetencesScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 
-      {/* Header Immense */}
-      <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
-        <View style={[styles.headerContent, isTabletOrWeb && { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxxl }]}>
-          <View style={[styles.headerTextWrap, isTabletOrWeb && { minWidth: 500 }]}>
-            <Text style={[styles.headerLabel, !isMobile && { fontSize: FontSizes.md, letterSpacing: 6 }]}>EXPERTISE</Text>
-            <Text style={[styles.headerTitle, !isMobile && { fontSize: FontSizes.display }]}>Compétences techniques</Text>
+      {/* Header Immense avec fond honeycomb */}
+      <View style={styles.headerWrapper}>
+        <HoneycombBackground />
+        <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
+          <View style={[styles.headerContent, isTabletOrWeb && { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxxl }]}>
+            <View style={[styles.headerTextWrap, isTabletOrWeb && { minWidth: 500 }]}>
+              <Text style={[styles.headerLabel, !isMobile && { fontSize: FontSizes.md, letterSpacing: 6 }]}>EXPERTISE</Text>
+              <Text style={[styles.headerTitle, !isMobile && { fontSize: FontSizes.display }]}>Compétences techniques</Text>
+            </View>
+            <Text style={[styles.headerDescription, !isMobile && { fontSize: FontSizes.xl, minWidth: 280 }]}>
+              Technologies et langages acquis au cours de ma formation et mes projets.
+            </Text>
           </View>
-          <Text style={[styles.headerDescription, !isMobile && { fontSize: FontSizes.xl, minWidth: 280 }]}>
-            Technologies et langages acquis au cours de ma formation et mes projets.
-          </Text>
-        </View>
-      </Animated.View>
+        </Animated.View>
+      </View>
 
       {/* Skills Grid */}
       <View style={[styles.skillsGrid, !isMobile && { padding: Spacing.xxxl, gap: Spacing.xxl }]}>
@@ -111,11 +115,18 @@ const styles = StyleSheet.create({
     paddingBottom: Spacing.xxxl
   },
 
-  /* Header */
-  header: {
-    backgroundColor: Colors.bgSecondary,
+  /* Header wrapper — contient le fond honeycomb + le contenu */
+  headerWrapper: {
+    position: 'relative',
+    overflow: 'hidden',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: 'rgba(154, 115, 143, 0.2)',
+  },
+  /* Header — transparent, au-dessus du canvas */
+  header: {
+    backgroundColor: 'transparent',
+    zIndex: 1,
+    position: 'relative',
   },
   headerContent: {
     paddingHorizontal: Spacing.xl,
@@ -128,7 +139,7 @@ const styles = StyleSheet.create({
   headerLabel: {
     fontSize: FontSizes.sm,
     letterSpacing: 4,
-    color: Colors.accent,
+    color: Colors.accentLight,
     fontWeight: '800',
     marginBottom: Spacing.md,
     textTransform: 'uppercase',
@@ -136,13 +147,13 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: FontSizes.xxl,
     fontWeight: '800',
-    color: Colors.textPrimary,
+    color: '#FFFFFF',
     letterSpacing: -1,
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
   },
   headerDescription: {
     fontSize: FontSizes.md,
-    color: Colors.textSecondary,
+    color: 'rgba(255, 255, 255, 0.7)',
     lineHeight: FontSizes.md * 1.5,
     width: '100%',
   },

@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'expo-router';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { projects } from '@/constants/data';
+import HoneycombBackground from '@/components/HoneycombBackground';
 
 
 
@@ -101,20 +102,23 @@ export default function ProjetsScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-      {/* Header */}
-      <Animated.View style={[
-        styles.header, 
-        isTabletOrWeb && { flexDirection: 'row', alignItems: 'center' },
-        { opacity: fadeAnim }
-      ]}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.headerLabel}>RÉALISATIONS</Text>
-          <Text style={styles.headerTitle}>Mes projets</Text>
-        </View>
-        <Text style={styles.headerDescription}>
-          Sélection de projets illustrant mes compétences techniques et ma passion pour le développement.
-        </Text>
-      </Animated.View>
+      {/* Header avec fond honeycomb */}
+      <View style={styles.headerWrapper}>
+        <HoneycombBackground />
+        <Animated.View style={[
+          styles.header, 
+          isTabletOrWeb && { flexDirection: 'row', alignItems: 'center' },
+          { opacity: fadeAnim }
+        ]}>
+          <View style={styles.headerLeft}>
+            <Text style={styles.headerLabel}>RÉALISATIONS</Text>
+            <Text style={styles.headerTitle}>Mes projets</Text>
+          </View>
+          <Text style={styles.headerDescription}>
+            Sélection de projets illustrant mes compétences techniques et ma passion pour le développement.
+          </Text>
+        </Animated.View>
+      </View>
 
       <View style={styles.grid}>
         {projects.map((project, index) => (
@@ -144,23 +148,30 @@ const styles = StyleSheet.create({
     paddingBottom: Spacing.xxxl
   },
 
-  /* Header */
+  /* Header wrapper — fond honeycomb + contenu */
+  headerWrapper: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(154, 115, 143, 0.2)',
+  },
+  /* Header — transparent, au-dessus du canvas */
   header: {
     paddingHorizontal: Spacing.xxl,
     paddingTop: Spacing.xl,
     paddingBottom: Spacing.xl,
-    backgroundColor: Colors.bgSecondary,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    backgroundColor: 'transparent',
     flexDirection: 'column',
     alignItems: 'flex-start',
     gap: Spacing.xxl,
+    zIndex: 1,
+    position: 'relative',
   },
   headerLeft: { flex: 1, minWidth: 250 },
   headerLabel: {
     fontSize: FontSizes.md,
     letterSpacing: 4,
-    color: Colors.accent,
+    color: Colors.accentLight,
     fontWeight: '800',
     marginBottom: Spacing.sm,
     textTransform: 'uppercase',
@@ -168,14 +179,14 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: FontSizes.display,
     fontWeight: '800',
-    color: Colors.textPrimary,
+    color: '#FFFFFF',
     letterSpacing: -1,
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
   },
   headerDescription: {
     flex: 1.5,
     fontSize: FontSizes.xl,
-    color: Colors.textSecondary,
+    color: 'rgba(255, 255, 255, 0.7)',
     lineHeight: FontSizes.xl * 1.5,
     minWidth: 300,
   },

@@ -14,6 +14,8 @@ import {
 } from 'react-native';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { personalInfo, aboutCards, qualities } from '@/constants/data';
+import HoneycombBackground from '@/components/HoneycombBackground';
+import BasketballShotAnimation from '@/components/BasketballShotAnimation';
 
 
 
@@ -50,32 +52,44 @@ export default function HomeScreen() {
       showsVerticalScrollIndicator={false}
     >
 
-      {/* Hero immense */}
-      <Animated.View style={[
-        styles.hero,
-        isTabletOrWeb && { flexDirection: 'row', gap: Spacing.xxl },
-        { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
-      ]}>
-        <Image source={require('@/assets/images/f1.jpg')} style={styles.heroImage} resizeMode="cover" />
-        <View style={[
-          styles.heroText,
-          isTabletOrWeb && { flex: 1, alignItems: 'flex-start' },
-          !isTabletOrWeb && { alignItems: 'center' }
+      {/* Hero immense avec fond honeycomb animé */}
+      <View style={styles.heroWrapper}>
+        {/* Fond animé — alvéoles hexagonales interactives */}
+        <HoneycombBackground />
+
+        {/* Contenu du hero — au-dessus du canvas */}
+        <Animated.View style={[
+          styles.hero,
+          isTabletOrWeb && { flexDirection: 'row', gap: Spacing.xxl },
+          { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
         ]}>
-          <Text style={styles.heroLabel}>PORTFOLIO</Text>
-          <Text style={[styles.heroName, !isTabletOrWeb && { textAlign: 'center' }]}>{personalInfo.name}</Text>
-          <Text style={[styles.heroTitle, !isTabletOrWeb && { textAlign: 'center' }]} numberOfLines={2}>{personalInfo.title}</Text>
-          <View style={styles.heroDivider} />
-          <Text style={styles.heroEmail}>{personalInfo.email}</Text>
-        </View>
-      </Animated.View>
+          <Image source={require('@/assets/images/f1.jpg')} style={styles.heroImage} resizeMode="cover" />
+          <View style={[
+            styles.heroText,
+            isTabletOrWeb && { flex: 1, alignItems: 'flex-start' },
+            !isTabletOrWeb && { alignItems: 'center' }
+          ]}>
+            <Text style={styles.heroLabel}>PORTFOLIO</Text>
+            <Text style={[styles.heroName, !isTabletOrWeb && { textAlign: 'center' }]}>{personalInfo.name}</Text>
+            <Text style={[styles.heroTitle, !isTabletOrWeb && { textAlign: 'center' }]} numberOfLines={2}>{personalInfo.title}</Text>
+            <View style={styles.heroDivider} />
+            <Text style={styles.heroEmail}>{personalInfo.email}</Text>
+          </View>
+        </Animated.View>
+      </View>
 
       {/* Section À propos */}
       <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionLabel}>À PROPOS</Text>
-          <Text style={styles.sectionTitle}>Me connaître</Text>
-          <View style={styles.sectionDivider} />
+        <View style={{ position: 'relative', marginBottom: 40 }}>
+          {/* Animation décorative basket (définit la hauteur de 250px) */}
+          <BasketballShotAnimation />
+
+          {/* Le titre est superposé exactement par-dessus l'animation */}
+          <View style={[styles.sectionHeader, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', marginBottom: 0, zIndex: 10, pointerEvents: 'none' as any }]}>
+            <Text style={styles.sectionLabel}>À PROPOS</Text>
+            <Text style={styles.sectionTitle}>Me connaître</Text>
+            <View style={styles.sectionDivider} />
+          </View>
         </View>
 
         <View style={styles.cardsRow}>
@@ -142,26 +156,35 @@ const styles = StyleSheet.create({
     paddingBottom: Spacing.xxxl
   },
 
-  /* Hero immense */
+  /* Wrapper du hero — contient le fond honeycomb + le contenu */
+  heroWrapper: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(154, 115, 143, 0.2)',
+  },
+
+  /* Hero immense — maintenant transparent, au-dessus du canvas */
   hero: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: Spacing.xxl,
     paddingVertical: Spacing.xxxl,
-    backgroundColor: Colors.bgSecondary,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    backgroundColor: 'transparent',
     minHeight: 450,
+    // Le contenu est au-dessus du fond honeycomb
+    zIndex: 1,
+    position: 'relative',
   },
   heroImage: {
     width: 280,
     height: 280,
     borderRadius: 140,
     borderWidth: 6,
-    borderColor: Colors.accent,
+    borderColor: Colors.accentLight,
     ...(Platform.OS === 'web'
-      ? { boxShadow: '0 10px 30px rgba(0,0,0,0.15)' } as any
-      : { elevation: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.15, shadowRadius: 20 }),
+      ? { boxShadow: '0 10px 40px rgba(0,0,0,0.4), 0 0 60px rgba(154, 115, 143, 0.15)' } as any
+      : { elevation: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.3, shadowRadius: 20 }),
   },
   heroText: {
     maxWidth: 900,
@@ -169,7 +192,7 @@ const styles = StyleSheet.create({
   heroLabel: {
     fontSize: FontSizes.md,
     letterSpacing: 6,
-    color: Colors.accent,
+    color: Colors.accentLight,
     fontWeight: '800',
     marginBottom: Spacing.sm,
     textTransform: 'uppercase',
@@ -177,14 +200,14 @@ const styles = StyleSheet.create({
   heroName: {
     fontSize: FontSizes.hero,
     fontWeight: '800',
-    color: Colors.textPrimary,
+    color: '#FFFFFF',
     letterSpacing: -1.5,
     lineHeight: FontSizes.hero * 1.1,
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
   },
   heroTitle: {
     fontSize: FontSizes.xl,
-    color: Colors.textSecondary,
+    color: 'rgba(255, 255, 255, 0.7)',
     marginTop: Spacing.sm,
     fontWeight: '500',
   },
@@ -197,7 +220,7 @@ const styles = StyleSheet.create({
   },
   heroEmail: {
     fontSize: FontSizes.lg,
-    color: Colors.accent,
+    color: Colors.accentLight,
     fontWeight: '600',
     letterSpacing: 1,
   },

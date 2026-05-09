@@ -87,9 +87,9 @@ export const parcours = {
   title: 'Parcours scolaire',
   entries: [
     {
-      institution: 'Stage de fin d\'études - Phenikaa (Hanoï, Vietnam)',
+      institution: 'Stage de fin d\'année - Phenikaa (Hanoï, Vietnam)',
       period: 'Avril 2026 - Juin 2026',
-      description: 'Leveraging AI to navigate and analyze the complex, unstructured urban environment of Hanoi, supporting Phenikaa’s Autonomous Vehicle and Traffic Monitoring projects.\nHarnessing Large Language Models (LLMs) for specific domains such as Education, Legal support, and Customer Service, with a focus on Vietnamese-English cross-lingual capabilities.\nAssisting medical professionals in diagnosis and treatment planning by analyzing X-rays, CT scans, and MRI data.',
+      description: 'Stage de recherche en intelligence artificielle au sein de l’IDSAI Lab : amélioration d’un modèle de segmentation d’images satellites pour la détection de zones inondées à l’aide de techniques de deep learning (U-Net, Sentinel-1/Sentinel-2).',
       image: 'vietnam',
     },
     {

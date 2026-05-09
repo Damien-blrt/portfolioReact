@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import { ScrollView, View, Text, Image, StyleSheet, Animated, Platform, useWindowDimensions } from 'react-native';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
 import { parcours } from '@/constants/data';
+import HoneycombBackground from '@/components/HoneycombBackground';
 
 
 
@@ -38,12 +39,15 @@ export default function ParcoursScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 
-      {/* Header Immense */}
-      <Animated.View style={[styles.header, { opacity: fadeAnim }, isMobile && { paddingHorizontal: Spacing.xl, paddingTop: Spacing.xl, paddingBottom: Spacing.xl }]}>
-        <Text style={[styles.headerLabel, isMobile && { fontSize: FontSizes.sm, letterSpacing: 4 }]}>FORMATION</Text>
-        <Text style={[styles.headerTitle, isMobile && { fontSize: FontSizes.display }]}>{parcours.title}</Text>
-        <View style={styles.headerDivider} />
-      </Animated.View>
+      {/* Header Immense avec fond honeycomb */}
+      <View style={styles.headerWrapper}>
+        <HoneycombBackground />
+        <Animated.View style={[styles.header, { opacity: fadeAnim }, isMobile && { paddingHorizontal: Spacing.xl, paddingTop: Spacing.xl, paddingBottom: Spacing.xl }]}>
+          <Text style={[styles.headerLabel, isMobile && { fontSize: FontSizes.sm, letterSpacing: 4 }]}>FORMATION</Text>
+          <Text style={[styles.headerTitle, isMobile && { fontSize: FontSizes.display }]}>{parcours.title}</Text>
+          <View style={styles.headerDivider} />
+        </Animated.View>
+      </View>
 
       {/* Horizontal style timeline - side by side blocks */}
       <View style={[styles.timelineHorizontal, isMobile && { padding: Spacing.xl }]}>
@@ -110,20 +114,27 @@ const styles = StyleSheet.create({
     paddingBottom: Spacing.xxxl
   },
 
-  /* Header */
+  /* Header wrapper — fond honeycomb + contenu */
+  headerWrapper: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(154, 115, 143, 0.2)',
+  },
+  /* Header — transparent, au-dessus du canvas */
   header: {
     paddingHorizontal: Spacing.xl,
     paddingTop: Spacing.xxl,
     paddingBottom: Spacing.xxl,
-    backgroundColor: Colors.bgSecondary,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    backgroundColor: 'transparent',
     alignItems: 'center',
+    zIndex: 1,
+    position: 'relative',
   },
   headerLabel: {
     fontSize: FontSizes.lg,
     letterSpacing: 8,
-    color: Colors.accent,
+    color: Colors.accentLight,
     fontWeight: '800',
     marginBottom: Spacing.md,
     textTransform: 'uppercase',
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: FontSizes.hero,
     fontWeight: '800',
-    color: Colors.textPrimary,
+    color: '#FFFFFF',
     letterSpacing: -1,
     textAlign: 'center',
     ...(Platform.OS === 'web' ? { fontFamily: "Georgia, 'Times New Roman', serif" } : {}),
@@ -139,7 +150,7 @@ const styles = StyleSheet.create({
   headerDivider: {
     width: 200,
     height: 8,
-    backgroundColor: Colors.border,
+    backgroundColor: 'rgba(154, 115, 143, 0.3)',
     marginTop: Spacing.xl,
     borderRadius: 4,
   },
