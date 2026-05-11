@@ -124,7 +124,7 @@ export default function HomeScreen() {
           {/* Le titre est superposé exactement par-dessus l'animation */}
           <View style={[styles.sectionHeader, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', marginBottom: 0, zIndex: 10, pointerEvents: 'none' as any }]}>
             <Text style={styles.sectionLabel}>À PROPOS</Text>
-            <Text style={styles.sectionTitle}>Me connaître</Text>
+            <Text style={[styles.sectionTitle, isMobile && { fontSize: FontSizes.xxl, marginBottom: Spacing.md }]}>Me connaître</Text>
             <View style={styles.sectionDivider} />
           </View>
         </View>
@@ -158,7 +158,7 @@ export default function HomeScreen() {
       <View style={styles.qualitiesSection}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionLabel}>QUALITÉS</Text>
-          <Text style={styles.sectionTitle}>{qualities.title}</Text>
+          <Text style={[styles.sectionTitle, isMobile && { fontSize: FontSizes.xxl, marginBottom: Spacing.md }]}>{qualities.title}</Text>
           <View style={styles.sectionDivider} />
         </View>
 

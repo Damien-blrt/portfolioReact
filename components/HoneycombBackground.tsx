@@ -13,7 +13,8 @@
  */
 
 import React, { useEffect, useRef, useCallback, useState } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, useWindowDimensions } from 'react-native';
+import { Colors } from '@/constants/theme';
 
 // ─── Configuration ──────────────────────────────────────────
 const HEX_SIZE = 28;                    // Rayon de chaque hexagone (px)
@@ -41,8 +42,12 @@ let instanceCounter = 0;
 
 // ─── Composant Principal ────────────────────────────────────
 export default function HoneycombBackground() {
-  // Sur mobile natif, on affiche un simple fond sombre
-  if (Platform.OS !== 'web') {
+  const { width } = useWindowDimensions();
+  // On considère mobile vertical < 640px (cohérent avec HomeScreen)
+  const isMobile = width < 640;
+
+  // Sur mobile natif ou format téléphone vertical, on affiche un fond uni violet sombre
+  if (Platform.OS !== 'web' || isMobile) {
     return <View style={styles.fallbackGradient} />;
   }
 
@@ -293,6 +298,6 @@ const styles = StyleSheet.create({
   },
   fallbackGradient: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#2A1F27',
+    backgroundColor: Colors.bgDark, // Violet uni (plum foncé)
   },
 });
