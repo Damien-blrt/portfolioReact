@@ -26,6 +26,7 @@ export default function HomeScreen() {
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
+  const scrollAnim = useRef(new Animated.Value(0)).current;
   const cardAnims = useRef(aboutCards.map(() => ({
     opacity: new Animated.Value(0),
     translateY: new Animated.Value(40),
@@ -43,6 +44,14 @@ export default function HomeScreen() {
         Animated.timing(anim.translateY, { toValue: 0, duration: 600, delay: 400 + index * 150, useNativeDriver: true }),
       ]).start();
     });
+
+    // Animation de pulsation douce pour l'indicateur de scroll
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(scrollAnim, { toValue: 10, duration: 2000, useNativeDriver: true }),
+        Animated.timing(scrollAnim, { toValue: 0, duration: 2000, useNativeDriver: true }),
+      ])
+    ).start();
   }, []);
 
   return (
@@ -75,6 +84,34 @@ export default function HomeScreen() {
             <View style={styles.heroDivider} />
             <Text style={styles.heroEmail}>{personalInfo.email}</Text>
           </View>
+        </Animated.View>
+      </View>
+      {/* Indicateur de scroll : Flèche en V très allongé horizontalement */}
+      <View style={{ height: 100, alignItems: 'center', justifyContent: 'center', marginTop: -30 }}>
+        <Animated.View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          opacity: 0.7,
+          transform: [{ translateY: scrollAnim }]
+        }}>
+          <View style={{
+            marginTop: 60,
+            width: 180,
+            height: 6,
+            backgroundColor: Colors.accent,
+            transform: [{ rotate: '12deg' }],
+            borderRadius: 3,
+            marginRight: -4
+          }} />
+          <View style={{
+            marginTop: 60,
+            width: 180,
+            height: 6,
+            backgroundColor: Colors.accent,
+            transform: [{ rotate: '-12deg' }],
+            borderRadius: 3,
+            marginLeft: -4
+          }} />
         </Animated.View>
       </View>
 
