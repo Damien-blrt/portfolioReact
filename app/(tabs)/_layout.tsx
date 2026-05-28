@@ -22,6 +22,7 @@ function TopTabBar({ state, descriptors, navigation }: any) {
     { name: 'competences', label: 'Compétences' },
     { name: 'parcours', label: 'Parcours' },
     { name: 'projets', label: 'Projets' },
+    { name: 'contact', label: 'Contact' },
   ];
 
   const handlePress = (route: any, isFocused: boolean) => {
@@ -124,6 +125,7 @@ export default function TabLayout() {
         <Tabs.Screen name="competences" options={{ title: 'Compétences — Damien BALLERAT' }} />
         <Tabs.Screen name="parcours" options={{ title: 'Parcours — Damien BALLERAT' }} />
         <Tabs.Screen name="projets" options={{ title: 'Projets — Damien BALLERAT' }} />
+        <Tabs.Screen name="contact" options={{ title: 'Contact — Damien BALLERAT' }} />
       </Tabs>
     </>
   );

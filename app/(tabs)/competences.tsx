@@ -1,6 +1,3 @@
-/**
- * Compétences Screen - Éléments immenses, 2/3 colonnes avec grande hauteur
- */
 import React, { useEffect, useRef } from 'react';
 import { ScrollView, View, Text, StyleSheet, Animated, Platform, useWindowDimensions } from 'react-native';
 import { Colors, Spacing, BorderRadius, FontSizes } from '@/constants/theme';
