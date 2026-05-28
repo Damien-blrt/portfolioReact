@@ -1,7 +1,7 @@
 # Damien Portfolio
 
-Application mobile portfolio développée avec React Native.
 Ce projet présente mon parcours, mes compétences, mes projets et mes expériences à travers une interface moderne, fluide et responsive.
+https://codefirst.iut.uca.fr/kubernetes/daballerat/damien-portfolio
 
 ---
 
