@@ -66,6 +66,8 @@ export default function ContactScreen() {
     const [focusedField, setFocusedField] = useState<string | null>(null);
     const [submitted, setSubmitted] = useState(false);
     const [emailError, setEmailError] = useState<string | null>(null);
+    const [lastSubmit, setLastSubmit] = useState(0);
+    const [cooldown, setCooldown] = useState(0);
 
     const isValidEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -73,6 +75,10 @@ export default function ContactScreen() {
     };
 
     const handleSubmit = async () => {
+        const now = Date.now();
+        if (now - lastSubmit < 30000) return;
+        setLastSubmit(now);
+        setCooldown(30);
         if (!isValidEmail(formData.email)) {
             setEmailError('Adresse email invalide');
             return;
@@ -94,8 +100,14 @@ export default function ContactScreen() {
             console.error('Erreur Supabase:', error.message);
         }
     };
+    useEffect(() => {
+        if (cooldown <= 0) return;
+        const timer = setTimeout(() => setCooldown(prev => prev - 1), 1000);
+        return () => clearTimeout(timer);
+    }, [cooldown]);
 
     const isFormValid = formData.name.trim() && formData.message.trim();
+    const isCoolingDown = Date.now() - lastSubmit < 30000;
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -196,23 +208,22 @@ export default function ContactScreen() {
                                 onBlur={() => setFocusedField(null)}
                             />
                         </View>
-
                         {/* Bouton envoyer */}
                         <Pressable
                             style={({ pressed }) => [
                                 styles.submitButton,
-                                !isFormValid && styles.submitButtonDisabled,
-                                pressed && isFormValid && styles.submitButtonPressed,
+                                (!isFormValid || cooldown > 0) && styles.submitButtonDisabled,
+                                pressed && isFormValid && cooldown === 0 && styles.submitButtonPressed,
                                 submitted && styles.submitButtonSuccess,
                             ]}
                             onPress={handleSubmit}
-                            disabled={!isFormValid}
+                            disabled={!isFormValid || cooldown > 0}
                         >
                             <Text style={[
                                 styles.submitButtonText,
-                                !isFormValid && styles.submitButtonTextDisabled,
+                                (!isFormValid || cooldown > 0) && styles.submitButtonTextDisabled,
                             ]}>
-                                {submitted ? '✓  Message envoyé !' : 'Envoyer le message'}
+                                {submitted ? '✓  Message envoyé !' : cooldown > 0 ? `Réessayer dans ${cooldown}s` : 'Envoyer le message'}
                             </Text>
                         </Pressable>
                     </View>
