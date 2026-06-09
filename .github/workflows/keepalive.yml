@@ -2,7 +2,7 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: '0 */12 * * *'
   workflow_dispatch:
 
 jobs:
@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-         - name: Query table
-      run: |
-        curl \
-          "https://dtidkwzdyahwmtbexxzx.supabase.co/rest/v1/messages_contact?select=id&limit=1" \
-          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}"
+      - name: Ping Supabase
+        run: |
+          curl --fail \
+            "https://dtidkwzdyahwmtbexxzx.supabase.co/rest/v1/messages_contact?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
